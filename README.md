@@ -10,7 +10,7 @@
 
 
 <p align="center"> <strong>
- Hexxus is a fast hash cracking tool which checks 30 thousand passwords in under 4 seconds and can crack the following types
+ Hexxus is a fast hash cracking tool which checks more than 30 thousand passwords in under 4 seconds and can crack the following types
  </strong>
  <ul>
     <li>bcrypt</li>
