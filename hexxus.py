@@ -29,8 +29,6 @@ def Main():
     parser.add_option('-n', "--name", dest="name", type="string", help="the hash name or type ")
     parser.add_option('-w', dest="wordlist", help="the path for the wordlist")
 
-    parser.set_defaults(wordlist="wordlist.txt")
-
     (options, args) = parser.parse_args()
 
     if (options.name == None or options.file == None):
