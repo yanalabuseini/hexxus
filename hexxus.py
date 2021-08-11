@@ -31,7 +31,7 @@ def Main():
 
     (options, args) = parser.parse_args()
 
-    if (options.name == None or options.file == None):
+    if (options.name == None or options.file == None or options.wordlist == None):
         print(parser.usage)
         exit()
 
