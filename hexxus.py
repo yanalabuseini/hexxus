@@ -6,7 +6,7 @@ from termcolor import cprint
 
 #predefined stuff
 file_name = __file__.split('/')[-1]
-valid_hashes = ["md5", "sha1", "sha224", "sha256", "sha384", "sha512", "bcrypt"]
+valid_hashes = ["md5", "sha1", "sha224", "sha256", "sha384", "sha512", "bcrypt", "ntlm"]
 
 
 def banner():
@@ -25,9 +25,9 @@ def Main():
     banner()
     parser = optparse.OptionParser(f'Usage : python3 {file_name} -f <file> -w <wordlist> -n <hash name>')
 
-    parser.add_option('-f', "--file", dest="file", type="string", help="the path to the file that contains the hash/es")
-    parser.add_option('-n', "--name", dest="name", type="string", help="the hash name or type ")
-    parser.add_option('-w', dest="wordlist", help="the path for the wordlist")
+    parser.add_option('-f', "--file", dest="file", type="string", help="The path to the file that contains the hash/es")
+    parser.add_option('-n', "--name", dest="name", type="string", help="The hash type [available types are: bcrypt, ntlm, md5, sha1, sha224, sha256, sha384, sha512, sha512]")
+    parser.add_option('-w', dest="wordlist", help="The path for the wordlist")
 
     (options, args) = parser.parse_args()
 
