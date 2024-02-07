@@ -1,4 +1,4 @@
-# hexxus
+# Hexxus
 <p align="center">
 <img width="560" height="300" src="https://github.com/yanalabuseini/hexxus/blob/main/hexxus.webp">
  </p>
