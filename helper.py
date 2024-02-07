@@ -1,4 +1,5 @@
 from passlib.hash import bcrypt
+import hashlib,binascii
 from termcolor import cprint
 from pwn import *
 import time
@@ -30,9 +31,40 @@ def crack(valid, wordlist, name):
                         end = time.time()
                         break
             end = time.time()
-            print('took '+ (format(end - start, ".2f")) + ' seconds\n')
-            p.failure("the specified wordlist does not contain the password, maybe try another wordlist")
+            print('It took '+ (format(end - start, ".2f")) + ' seconds\n')
+            p.failure("The specified wordlist does not contain the password, maybe try another wordlist")
 
+
+def ntlm(valid, wordlist, name):
+    done = False
+    for hash_value in valid:
+        start = time.time()
+        hash_value = hash_value.strip("\n")
+        if hash_value == "":
+            continue
+        print(f"[+] Attempting to crack {hash_value}")
+        with open(wordlist, "r", encoding="latin-1") as passwordlist: 
+            attempts = 0
+            for (index, password) in enumerate(passwordlist):
+                attempts += 1 
+                password = password.strip("\n")
+                hashed = hashlib.new('md4', password.encode('utf-16le')).digest()
+                hashed = binascii.hexlify(hashed)
+                hashed = hashed.decode('utf-8')
+                print(f"trial #{index}: {password}        ", end='\r\r')
+                if (hashed == hash_value):
+                    end = time.time()
+                    done=True
+                    print(f"\nPassword found after {attempts} attempts\n")
+                    cprint(f"The password is {password}", 'green', end='')
+                    break
+        end = time.time()
+        print('\nIt took '+ (format(end - start, ".2f")) + ' seconds\n')
+        if (done == False):
+            print("The specified wordlist does not contain the password, maybe try another wordlist")
+
+
+        
 
 def bcry(valid, wordlist, name):
     done = False
@@ -50,22 +82,24 @@ def bcry(valid, wordlist, name):
             encoded_string = password.encode("ascii", "ignore")
             password = encoded_string.decode()
             attempts += 1
-            print(f"\rtrying {password} ", end='')
+            print(f"\r\rtrial #{index}: {password}        ", end='')
             correct = bcrypt.verify(password, hash_value)
             if (correct):
                 end = time.time()
                 print(f"\nPassword found after {attempts} attempts")
                 cprint(f"The password is {password}", 'green')
-                print("it took " + format(end - start, ".2f")+ " seconds\n")
+                print("It took " + format(end - start, ".2f")+ " seconds\n")
                 done = True
                 break
         if (done == False):
-            print("the specified wordlist does not contain the password, maybe try another wordlist")
+            print("The specified wordlist does not contain the password, maybe try another wordlist")
 
 
 def passer(valid, wordlist, name):
     if (name == "bcrypt"):
         bcry(valid, wordlist, name)
+    elif name == "ntlm":
+        ntlm(valid, wordlist, name)
     else :
         crack(valid, wordlist, name)
 
@@ -135,5 +169,15 @@ def checker(the_file, wordlist, name):
                 continue
             else:
                 notvalid(line, name)
+
+        elif name == "ntlm":
+            if len(line.strip("\n")) == 32:
+                valid.append(line)
+            elif line.strip("\n") == "":
+                continue
+            else:
+                notvalid(line, name)
+
     passer(valid, wordlist, name)
+
 
