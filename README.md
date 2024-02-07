@@ -14,6 +14,7 @@
  </strong>
  <ul>
     <li>bcrypt</li>
+     <li>NTLM</li>
      <li>sha512</li>
      <li>sha384</li>
      <li>sha256</li>
