@@ -90,7 +90,7 @@ please note that bcrypt takes more time depending on the way it was built
 <!-- CONTACT -->
 ## Contact
 
-[@_enigma146](https://twitter.com/_enigma146) - yanalabuseini656@gmail.com
+[@_enigma146](https://twitter.com/_enigma146) - yoabuseini@gmail.com
 
 Project Link: [https://github.com/yanalabuseini/hexxus](https://github.com/yanalabuseini/hexxus)
 
